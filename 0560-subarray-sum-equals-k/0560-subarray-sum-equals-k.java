@@ -1,4 +1,5 @@
 class Solution {
+    
     public int subarraySum(int[] nums, int k) {
 
         /*
@@ -31,7 +32,10 @@ class Solution {
         
         return cnt;
         */
-
+        
+        
+        
+        /*
         int count = 0;
         for(int i =0; i<nums.length; i++){
             int sum =0;
@@ -44,5 +48,35 @@ class Solution {
             
         }
         return count;
+        
+        */
+        
+        int n = nums.length;
+        
+        int arr[] = new int[n];
+        arr[0] = nums[0];
+        
+        for(int i = 1 ; i < n ; i++){
+            arr[i] = nums[i] + arr[i-1];
+        }
+        
+        int count = 0;
+        
+        for(int i= 0; i < n; i++){
+            if(arr[i] == k){
+                count ++;
+            }
+        }
+        
+        Map<Integer, Integer> map = new HashMap<>();
+        
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(arr[i] - k))
+                count += map.get(arr[i] - k);
+            map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
+        }
+        
+        return count;
     }
+    
 }
