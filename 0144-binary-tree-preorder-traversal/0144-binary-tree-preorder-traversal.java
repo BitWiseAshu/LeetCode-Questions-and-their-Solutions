@@ -14,6 +14,9 @@
  * }
  */
 class Solution {
+    
+    // This is a Recursive Solution
+    /*
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> list = preorderTraversalHelper(root, new ArrayList<Integer>());
         return list;
@@ -30,4 +33,35 @@ class Solution {
         list = preorderTraversalHelper(root.right, list);
         return list;
     }
+    */
+    
+    
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<Integer>();
+        
+        if(root == null){
+            return list;
+        }
+        
+        Stack<TreeNode> st = new Stack<>();
+        st.push(root);
+        
+        while(!st.isEmpty()){
+            TreeNode currentNode = st.pop();
+            list.add(currentNode.val);
+            
+            // Push the right child first (if exists) so that it will be processed after the left child
+            if(currentNode.right != null){
+                st.push(currentNode.right);
+            }
+            
+            if(currentNode.left != null){
+                st.push(currentNode.left);
+            }
+            
+        }
+        
+        return list;
+    }
+
 }
