@@ -14,6 +14,9 @@
  * }
  */
 class Solution {
+    
+    // 1st method
+    /*
 
     public int findPosition(int []inorderArr, int element){
         for(int i = 0 ; i < inorderArr.length; i++){
@@ -47,4 +50,41 @@ class Solution {
         TreeNode ans = buildTreeHelper(preorder, inorder, preOrderIndex, 0, n-1, n);
         return ans;
     }
+    */
+    
+    
+    
+    // 2nd method 
+    
+    private Map<Integer, Integer> inorderIndexMap;
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int n = preorder.length;
+        inorderIndexMap = new HashMap<>();
+
+        // Populate the index map for elements in the inorder array
+        for (int i = 0; i < n; i++) {
+            inorderIndexMap.put(inorder[i], i);
+        }
+
+        
+        TreeNode ans = buildTreeHelper(preorder, 0, n - 1);
+        return ans;
+    }
+
+    private TreeNode buildTreeHelper(int[] preorder, int inOrderStart, int inOrderEnd) {
+        if (inOrderStart > inOrderEnd) {
+            return null;
+        }
+
+        int element = preorder[preOrderIndex++];
+        TreeNode root = new TreeNode(element);
+        int position = inorderIndexMap.get(element);
+        root.left = buildTreeHelper(preorder, inOrderStart, position - 1);
+        root.right = buildTreeHelper(preorder, position + 1, inOrderEnd);
+
+        return root;
+    }
+
+    private int preOrderIndex = 0; // Store the current index in the preorder array
 }
