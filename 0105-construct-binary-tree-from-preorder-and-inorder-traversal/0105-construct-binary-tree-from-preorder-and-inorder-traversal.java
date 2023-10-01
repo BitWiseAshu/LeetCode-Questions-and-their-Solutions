@@ -57,6 +57,7 @@ class Solution {
     // 2nd method 
     
     private Map<Integer, Integer> inorderIndexMap;
+    private int preOrderIndex = 0; // Store the current index in the preorder array
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         int n = preorder.length;
@@ -85,6 +86,4 @@ class Solution {
 
         return root;
     }
-
-    private int preOrderIndex = 0; // Store the current index in the preorder array
 }
