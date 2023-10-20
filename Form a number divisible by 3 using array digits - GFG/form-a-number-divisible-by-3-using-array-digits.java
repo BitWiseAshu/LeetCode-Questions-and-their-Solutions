@@ -33,7 +33,7 @@ class Solution {
         
         for(int num : arr) sum+=num;
         
-        sum = sum;
+        
            
         return (sum%3==0)? 1 : 0;
     }
