@@ -4,9 +4,14 @@ class Solution {
 
         n = (n * (n + 1)) / 2;
 
+        // for(int i = 0 ; i < nums.length; i++){
+        //     n = n - nums[i];
+        // }
+        
+        int sum = 0;
         for(int i = 0 ; i < nums.length; i++){
-            n = n - nums[i];
+            sum += nums[i];
         }
-        return n;
+        return n-sum;
     }
 }
