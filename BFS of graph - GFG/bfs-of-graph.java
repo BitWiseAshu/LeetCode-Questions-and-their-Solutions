@@ -50,7 +50,12 @@ class Solution {
                 list.add(currentElem);
                 visited[currentElem]=true;
                 for(int i=0;i<adj.get(currentElem).size();i++){
-                    queue.add(adj.get(currentElem).get(i));
+                    int neighbourElem = adj.get(currentElem).get(i);
+                    
+                    if(!visited[neighbourElem]){
+                        queue.add(neighbourElem);
+                    }
+                    
                 }
             }
             
