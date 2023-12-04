@@ -117,7 +117,8 @@ class Solution {
                     else{
                         colors[neighbor] = 0;
                     }
-                    queue.offer(neighbor);
+                    
+                    queue.add(neighbor);
                 }
             }
         }
