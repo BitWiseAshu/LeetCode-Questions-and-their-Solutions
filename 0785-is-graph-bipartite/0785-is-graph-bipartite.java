@@ -110,7 +110,13 @@ class Solution {
                 }
 
                 if (colors[neighbor] == -1) {
-                    colors[neighbor] = 1 - currentColor;
+                    // colors[neighbor] = 1 - currentColor;
+                    if(currentColor == 0){
+                        colors[neighbor] = 1;
+                    }
+                    else{
+                        colors[neighbor] = 0;
+                    }
                     queue.offer(neighbor);
                 }
             }
