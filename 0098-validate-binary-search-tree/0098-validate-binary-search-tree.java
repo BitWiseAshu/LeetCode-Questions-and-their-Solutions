@@ -19,57 +19,22 @@ class Solution {
             return true;
         }
         
-        boolean ans = isValidBSTHelper(root, null, null);
+        boolean ans = isValidBSTHelper(root, Long.MIN_VALUE, Long.MAX_VALUE);
         return ans;
     }
     
-    public boolean isValidBSTHelper(TreeNode root, TreeNode low, TreeNode high){
-        
+    public boolean isValidBSTHelper(TreeNode root, long low, long high){
         if(root == null){
             return true;
         }
         
-        if(low != null){
-            if(root.val <= low.val){
-                return false;
-            }
-        }
-        if(high != null){
-            if(root.val >= high.val){
-                return false;
-            }
-        }
-        
-        boolean left = isValidBSTHelper(root.left, low, root);
-        boolean right = isValidBSTHelper(root.right, root, high);
-        
-        return left && right;
-        
-        
-        /*
-        if(root.left == null && root.right == null){
-            return true;
-        }
-        
-        if(root.left == null && root.right != null){
-            if(root.right.val <= root.val){
-                return false;
-            }
-        }
-        if(root.right == null && root.left != null){
-            if(root.left.val >= root.val){
-                return false;
-            }
-        }
-        
-        if(root.left.val >= root.val || root.right.val <=root.val){
+        if(root.val <= low || root.val >= high){
             return false;
         }
         
-        boolean left = isValidBSTHelper(root.left);
-        boolean right = isValidBSTHelper(root.right);
+        boolean left = isValidBSTHelper(root.left, low, root.val);
+        boolean right = isValidBSTHelper(root.right, root.val, high);
         
         return left && right;
-        */
     }
 }
