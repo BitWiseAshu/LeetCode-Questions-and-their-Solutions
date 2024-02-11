@@ -60,7 +60,7 @@ class Solution {
             
         }
         
-        System.out.print(map);
+        // System.out.print(map);
 
         List<List<Integer>> ans = new ArrayList<>();
 
@@ -72,8 +72,8 @@ class Solution {
                     currList.add(nodes.poll());
                 }
             }
-            System.out.print(currList);
-            ans.add(new ArrayList<>(currList));
+            // System.out.print(currList);
+            ans.add(currList);
 
         }
     
