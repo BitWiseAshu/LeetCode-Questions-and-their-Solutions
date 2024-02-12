@@ -14,53 +14,59 @@
  * }
  */
 
-// class Pair{
-//     TreeNode node;
-//     int idx;
+class Pair{
+    TreeNode node;
+    int idx;
     
-//     Pair(TreeNode node, int idx){
-//         this.node = node;
-//         this.idx = idx;
-//     }
-// }
+    Pair(TreeNode node, int idx){
+        this.node = node;
+        this.idx = idx;
+    }
+}
 
-// class Solution {
-//     public int widthOfBinaryTree(TreeNode root) {
-//         Queue<Pair> q = new LinkedList<>();
-//         int ans = Integer.MIN_VALUE;
+class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        Queue<Pair> q = new LinkedList<>();
+        int ans = Integer.MIN_VALUE;
         
-//         q.add(new Pair(root, 0));
+        q.add(new Pair(root, 0));
         
-//         while(!q.isEmpty()){
-//             int size = q.size();
+        while(!q.isEmpty()){
+            int size = q.size();
             
-//             int leftmost = q.getFirst().idx;
-//             int rightmost = q.getLast().idx;
+            int start = 0;
+            int end = 0;
             
-//             ans = Math.max(ans, (rightmost - leftmost + 1));
-            
-//             for(in ti = 0 ; i  < size; i++){
-//                 Pair front = q.removeFirst();
-//                 TreeNode node=  front.node;
-//                 int idx = front.idx;
+            for(int i = 0 ; i  < size; i++){
+                Pair front = q.poll();
+                TreeNode node = front.node;
+                int idx = front.idx;
+                    
+                if(i == 0){
+                    start = idx;
+                }
+                if(i == size-1){
+                    end = idx;
+                }
                 
-//                 if(front.left != null){
-//                     q.add(new Pair(front.left, 2*idx + 1));
-//                 }
-                
-//                 if(front.right != null){
-//                     q.add(new Pair(front.right, 2*idx + 2));
-//                 }
-//             }
-//         }
+                if(node.left != null){
+                    q.add(new Pair(node.left, (2*idx)+1));
+                }
+                if(node.right != null){
+                    q.add(new Pair(node.right, (2*idx)+2));
+                }
+            }
+            
+            ans = Math.max(ans, end-start+1);
+        }
         
-//         return ans;
-//     }
-// }
+        return ans;
+    }
+}
 
 
 
-
+/*
 
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
@@ -88,18 +94,19 @@ class Solution {
                 q.addLast(new pair(element.root.right,2*element.level+1));
             }
         }
-return max;
+        return max;
 
     }
 
 
-static class pair {
-    int level;
-    TreeNode root;
-    public pair(TreeNode root, int level)
-    {
-        this.level=level;
-        this.root=root;
+    static class pair {
+        int level;
+        TreeNode root;
+        public pair(TreeNode root, int level)
+        {
+            this.level=level;
+            this.root=root;
+        }
     }
 }
-}
+*/
