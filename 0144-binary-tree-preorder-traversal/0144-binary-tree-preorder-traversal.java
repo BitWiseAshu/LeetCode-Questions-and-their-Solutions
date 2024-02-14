@@ -36,6 +36,9 @@ class Solution {
     */
     
     
+    
+    // Using Satck  
+    /*
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<Integer>();
         
@@ -62,6 +65,40 @@ class Solution {
         }
         
         return list;
+    }
+    */
+    
+    
+    // Using Morris preOrder Traversal
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> preOrder = new ArrayList<Integer>();
+        
+        TreeNode curr = root;
+        while(curr != null){
+            if(curr.left == null){
+                preOrder.add(curr.val);
+                curr = curr.right;
+            }
+            else{
+                TreeNode prev = curr.left;
+                
+                while(prev.right != null && prev.right != curr){
+                    prev = prev.right;
+                }
+                
+                if(prev.right == null){
+                    prev.right = curr;
+                    preOrder.add(curr.val);
+                    curr = curr.left;
+                }
+                else{
+                    prev.right = null;
+                    curr = curr.right;
+                }
+            }
+        }
+        
+        return preOrder;
     }
 
 }
