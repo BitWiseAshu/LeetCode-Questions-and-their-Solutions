@@ -13,6 +13,10 @@
  *     }
  * }
  */
+
+
+// Using Recursion preorder
+/*
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
@@ -27,5 +31,44 @@ class Solution {
         }
 
         return ans;
+    }
+}
+*/
+
+
+
+
+// Using Morris Traversal
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> inOrder = new ArrayList<>();
+        TreeNode current = root;
+        
+        while(current != null){
+            if(current.left == null) {
+                inOrder.add(current.val);
+                current = current.right;
+            }
+            else{
+                TreeNode prev = current.left;
+                
+                while(prev.right != null && prev.right != current){
+                    prev = prev.right;
+                }
+                
+                if(prev.right == null){
+                    prev.right = current;
+                    current = current.left;
+                }
+                else{
+                    prev.right = null;
+                    inOrder.add(current.val);
+                    current  = current.right;
+                }
+            }
+        }
+        
+        return inOrder;
     }
 }
