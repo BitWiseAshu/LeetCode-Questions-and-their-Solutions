@@ -12,11 +12,6 @@ class Solution {
             }
             i++;
             
-            // if(count > k){
-            //     count --;
-            //     j++;
-            // }
-            
             while(count > k){
                 
                 if(nums[j] == 0){
