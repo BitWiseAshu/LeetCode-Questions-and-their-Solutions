@@ -48,7 +48,7 @@ class Solution {
 
 
 // Tabulation approach
-
+/*
 class Solution {
     
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
@@ -87,5 +87,55 @@ class Solution {
             }
         }
         return dp[m-1][n-1];
+    }
+}
+*/
+ 
+
+// Space optimization
+
+
+class Solution {
+    
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if (obstacleGrid[0][0] == 1) {
+            return 0;
+        }
+        
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        
+        int[] prev = new int[n];
+        
+        for (int i = 0; i < m; i++) {
+            int[] temp = new int[n];
+            
+            for (int j = 0; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    temp[j] = 1;
+                    continue;
+                }
+                
+                if (obstacleGrid[i][j] == 1) {
+                    temp[j] = 0;
+                    continue;
+                }
+                
+                int down = 0;
+                int right = 0;
+
+                if (i > 0) {
+                    down = prev[j];
+                }
+                
+                if (j > 0) {
+                    right = temp[j - 1];
+                }
+                
+                temp[j] = down + right;
+            }
+            prev = temp.clone(); // Create a copy of temp for the next iteration
+        }
+        return prev[n - 1];
     }
 }
