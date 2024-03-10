@@ -74,7 +74,7 @@ class Solution {
 
 
 // Memoization Approach
-
+/*
 class Solution {
     
     public int minPathSumUsingMemoization(int i, int j, int [][]grid, int [][]dp){
@@ -83,7 +83,7 @@ class Solution {
         }
         
         if(i < 0 || j < 0){
-            return 10000000;
+            return 10000000; // return larger value
         }
         
         if(dp[i][j] != -1){
@@ -109,6 +109,57 @@ class Solution {
         }
         
         return minPathSumUsingMemoization(n-1, m-1, grid, dp);
+    }
+}
+
+*/
+
+
+
+
+
+
+
+
+
+// Tabulation approach
+
+class Solution {
+
+    public int minPathSum(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        int dp[][] = new int[n][m];
+        
+        for(int i = 0  ; i < n; i++){
+            for(int j = 0 ;  j < m ; j++){
+                if(i == 0 && j == 0){
+                    dp[i][j] = grid[i][j];
+                    continue;
+                }
+                
+                int right = grid[i][j];
+                if(j > 0){
+                    right += dp[i][j-1];
+                }
+                else{
+                    right += 10000000;
+                }
+                
+                
+                int down = grid[i][j];
+                if(i > 0){
+                    down += dp[i-1][j];
+                }
+                else{
+                    down += 10000000;
+                }
+                
+                dp[i][j] = Math.min(right, down);
+            }
+        }
+        return dp[n-1][m-1];
     }
 }
 
