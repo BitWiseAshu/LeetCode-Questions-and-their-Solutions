@@ -19,6 +19,7 @@ public class Solution {
         ListNode fast = head;
         
         while (fast != null && fast.next != null) {
+            
             slow = slow.next; // Move one step at a time
             fast = fast.next.next; // Move two steps at a time
             
