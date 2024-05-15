@@ -9,6 +9,9 @@
  * }
  */
 class Solution {
+    
+    // First Method
+    /*
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if(head == null || head.next == null){
             return null;
@@ -38,5 +41,48 @@ class Solution {
             ans.next = ans.next.next;
         }
         return head;
+    }
+    */
+    
+    
+    
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head == null || head.next == null){
+            return null;
+        }
+        
+        ListNode reversedHead = reverse(head);
+        
+        ListNode tempReversedHead = reversedHead;
+        
+        for(int i = 1; i < n-1; i++){
+            tempReversedHead = tempReversedHead.next;
+        }
+        
+        if (n == 1){
+            reversedHead = tempReversedHead.next;
+        }
+        
+        tempReversedHead.next = tempReversedHead.next.next;
+        
+        ListNode ans = reverse(reversedHead);
+        
+        return ans;
+        
+    }
+    
+    public ListNode reverse(ListNode head){
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode next = null;
+        
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        return prev;
     }
 }
