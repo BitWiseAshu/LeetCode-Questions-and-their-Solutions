@@ -80,8 +80,9 @@ class Solution {
     
     
     
+    // Using BFS
     
-    
+    /*
     public void dfs(int [][]isConnected, boolean []visited, int node, int n){
         visited[node] = true;
         
@@ -106,5 +107,48 @@ class Solution {
         }
         
         return numberOfProvinces;
+    }
+    
+    */
+    
+    
+    
+    
+    
+    // Using BFS
+    
+    public int findCircleNumUsingBFS(int [][]isConnected, boolean []visited, int n){
+        Queue<Integer> q = new LinkedList<>();
+        
+        int numberOfProvinces = 0;
+        
+        for(int i = 0; i < n; i++){
+            if(visited[i] == false){
+                visited[i] = true;
+                numberOfProvinces ++;
+                q.add(i);
+                
+                while(!q.isEmpty()){
+                    int frontNode = q.poll();
+            
+                    for(int j = 0; j < n; j++){
+                        if(isConnected[frontNode][j] == 1 && visited[j] == false){
+                            q.add(j);
+                            visited[j] = true;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return numberOfProvinces;
+        
+    }
+    
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        boolean []visited = new boolean[n];
+        
+        return findCircleNumUsingBFS(isConnected, visited, n);
     }
 }
