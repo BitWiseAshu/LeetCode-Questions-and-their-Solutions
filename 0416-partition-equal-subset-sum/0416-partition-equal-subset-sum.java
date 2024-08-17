@@ -101,7 +101,7 @@ class Solution {
 
 
 // using tabulation
-
+/*
 class Solution {
     public boolean canPartition(int[] arr) {
         // Calculate the total sum of the array elements
@@ -152,4 +152,48 @@ class Solution {
         }
     }
     
+}
+*/
+
+
+
+
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        
+        for(int i = 0; i < nums.length; i++){
+            sum += nums[i];
+        }
+        
+        if(sum % 2 == 1) {
+            return false;
+        }
+        
+        int target = sum/2 ;
+        Boolean dp[][] = new Boolean[nums.length][target+1];
+        
+        return canPartitionHelper(nums, 0, target, 0, dp);
+    }
+    
+    public boolean canPartitionHelper(int nums[], int index, int target, int sum, Boolean [][]dp){
+        if (index >= nums.length || sum > target) {
+            return false;
+        }
+        
+        if(sum == target){
+            return true;
+        }
+        
+        if(dp[index][sum] != null){
+            return dp[index][sum];
+        }
+        
+        boolean taken = canPartitionHelper(nums, index+1, target, sum+nums[index], dp);
+        boolean nonTaken = canPartitionHelper(nums, index+1, target, sum, dp);
+        
+        dp[index][sum] = taken || nonTaken;
+        
+        return dp[index][sum];
+    }
 }
