@@ -39,7 +39,7 @@ class Solution {
 
 
 // Memoization
-
+/*
 class Solution {
     
     public int maxProfitHelper(int []prices, int index, int buy, int n, int [][]dp){
@@ -79,5 +79,45 @@ class Solution {
         }
         
         return maxProfitHelper(prices, 0, 1, n, dp);
+    }
+}
+*/
+
+
+
+
+
+// Tabulation
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int[][] dp = new int[n + 1][2];
+
+        // Base case: If we are at the last index, profit is 0 as there's no day left to make any transactions
+        dp[n][0] = dp[n][1] = 0;
+
+        // Fill the dp table from the second last day to the first day
+        for (int index = n - 1; index >= 0; index--) {
+            for (int buy = 0; buy <= 1; buy++) {
+                int take, notTake;
+
+                if (buy == 1) {
+                    // If buy == 1, we have the option to buy the stock
+                    take = -prices[index] + dp[index + 1][0];
+                    notTake = dp[index + 1][1];
+                } else {
+                    // If buy == 0, we have the option to sell the stock
+                    take = prices[index] + dp[index + 1][1];
+                    notTake = dp[index + 1][0];
+                }
+
+                dp[index][buy] = Math.max(take, notTake);
+            }
+        }
+
+        // The answer will be in dp[0][1] as it means we start on the first day with the ability to buy
+        return dp[0][1];
     }
 }
