@@ -1,3 +1,6 @@
+// Memoization
+
+/*
 class Solution {
     
     public int maxProfitHelper(int []prices, int index, int buy, int n, int [][]dp){
@@ -37,5 +40,30 @@ class Solution {
         }
         
         return maxProfitHelper(prices, 0, 1, n, dp);
+    }
+}
+*/
+
+
+
+class Solution {
+    
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        if (n == 0) return 0;
+        
+        int dp[][] = new int[n + 1][2];
+        
+        for (int index = n - 1; index >= 0; index--) {
+            for (int buy = 0; buy < 2; buy++) {
+                if (buy == 1) { // If you can buy the stock
+                    dp[index][buy] = Math.max(dp[index + 1][1], -prices[index] + dp[index + 1][0]);
+                } else { // If you can sell the stock
+                    dp[index][buy] = Math.max(dp[index + 1][0], prices[index] + (index + 2 <= n ? dp[index + 2][1] : 0));
+                }
+            }
+        }
+        
+        return dp[0][1]; // Start with the option to buy
     }
 }
