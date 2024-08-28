@@ -39,7 +39,7 @@ class Solution {
 
 
 // Memoization approach
-
+/*
 class Solution {
     
     public int maxProfitHelper(int []prices, int index, int n, int capacity, int canBuy, int [][][]dp){
@@ -85,5 +85,42 @@ class Solution {
         }
         
         return maxProfitHelper(prices, 0, n, 2, 1, dp);
+    }
+}
+*/
+
+
+
+
+// Tabulation
+
+
+class Solution {
+    
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        
+        int dp[][][] = new int[n+1][2][3];
+        
+        // Initialize the base cases
+        for (int i = 0; i <= n; i++) {
+            for (int buy = 0; buy < 2; buy++) {
+                dp[i][buy][0] = 0; // No profit can be made with 0 capacity left
+            }
+        }
+
+        for(int index = n-1; index >= 0; index--){
+            for(int buy = 0; buy < 2; buy++){
+                for(int capacity = 1; capacity < 3 ; capacity++){
+                    if(buy == 1){ // we can buy 
+                        dp[index][buy][capacity] = Math.max(-prices[index] + dp[index+1][0][capacity], dp[index+1][1][capacity]);
+                    } else { // we can sell
+                        dp[index][buy][capacity] = Math.max(prices[index] + dp[index+1][1][capacity-1], dp[index+1][0][capacity]);
+                    }
+                }
+            }
+        }
+        
+        return dp[0][1][2];
     }
 }
