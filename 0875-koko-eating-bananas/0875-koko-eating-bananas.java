@@ -3,9 +3,8 @@ class Solution {
     public boolean canEat(int piles[], int mid, int h, int n) {
         int time = 0;
         for (int i = 0; i < n; i++) {
-            // Correct time calculation: ceil(piles[i] / mid) = (piles[i] + mid - 1) / mid
             time += (piles[i] + mid - 1) / mid;
-            // If time already exceeds h, no need to continue
+            
             if (time > h) {
                 return false;
             }
@@ -19,7 +18,7 @@ class Solution {
         int low = 1;
         int high = 0;
         for (int pile : piles) {
-            high = Math.max(high, pile); // Find the maximum pile size
+            high = Math.max(high, pile);
         }
         
         int ans = high;
@@ -29,10 +28,10 @@ class Solution {
             
             boolean eat = canEat(piles, mid, h, n);
             if (eat) {
-                ans = mid; // Update answer with current mid if Koko can finish in time
-                high = mid - 1; // Try a smaller speed
+                ans = mid;
+                high = mid - 1;
             } else {
-                low = mid + 1; // Try a larger speed
+                low = mid + 1;
             }
         }
         
