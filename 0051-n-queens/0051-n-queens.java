@@ -1,5 +1,5 @@
 // Backtracking solution
-
+/*
 class Solution {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> result = new ArrayList<>();
@@ -55,58 +55,63 @@ class Solution {
         return res;
     }
 }
-
+*/
 
 
 
 // optimal solution
 
 
-// class Solution {
-//     public List<List<String>> solveNQueens(int n) {
-//         List<List<String>> result = new ArrayList<>();
-//         char[][] board = new char[n][n];
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> result = new ArrayList<>();
+        char[][] board = new char[n][n];
         
-//         for (int i = 0; i < n; i++) {
-//             Arrays.fill(board[i], '.');
-//         }
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(board[i], '.');
+        }
         
-//         int sameRow[] = new int[n];
-//         int upperDiagonal[] = new int[(2*n)-1];
-//         int lowerDiagonal[] = new int[(2*n)-1];
+        int sameRow[] = new int[n];
+        int upperDiagonal[] = new int[(2*n)-1];
+        int lowerDiagonal[] = new int[(2*n)-1];
         
-//         solve(0, board, result, n, sameRow, upperDiagonal, lowerDiagonal);
-//         return result;
-//     }
+        solve(0, board, result, n, sameRow, upperDiagonal, lowerDiagonal);
+        return result;
+    }
     
-//     private void solve(int col, char[][] board, List<List<String>> result, int n, int sameRow[], int upperDiagonal[], int lowerDiagonal[]) {
-//         if (col == n) {
-//             result.add(construct(board)); // If all columns are filled, add the solution to result
-//             return;
-//         }
+    private void solve(int col, char[][] board, List<List<String>> result, int n, int sameRow[], int upperDiagonal[], int lowerDiagonal[]) {
+        if (col == n) {
+            result.add(construct(board)); // If all columns are filled, add the solution to result
+            return;
+        }
         
-//         for (int row = 0; row < n; row++) {
-//             if (isSafe(board, row, col, n, sameRow, upperDiagonal, lowerDiagonal)) {
-//                 board[row][col] = 'Q'; 
-//                 solve(col + 1, board, result, n, sameRow, upperDiagonal, lowerDiagonal); 
-//                 board[row][col] = '.'; 
-//             }
-//         }
-//     }
+        for (int row = 0; row < n; row++) {
+            if (isSafe(board, row, col, n, sameRow, upperDiagonal, lowerDiagonal)) {
+                board[row][col] = 'Q'; 
+                sameRow[row] = 1;
+                upperDiagonal[n-1+col-row] = 1;
+                lowerDiagonal[row+col] = 1;
+                solve(col + 1, board, result, n, sameRow, upperDiagonal, lowerDiagonal); 
+                board[row][col] = '.'; 
+                sameRow[row] = 0;
+                upperDiagonal[n-1+col-row] = 0;
+                lowerDiagonal[row+col] = 0;
+            }
+        }
+    }
     
-//     private boolean isSafe(char[][] board, int row, int col, int n, int sameRow[], int upperDiagonal[], int lowerDiagonal[]) {
-//         if(sameRow[row] == 0 || upperDiagonal[n-1+col-row] == 0 || lowerDiagonal[row+col] == 0){
-//             return true;
-//         }
-        
-//         return false;
-//     }
+    private boolean isSafe(char[][] board, int row, int col, int n, int sameRow[], int upperDiagonal[], int lowerDiagonal[]) {
+        if (sameRow[row] == 1 || upperDiagonal[n-1+col-row] == 1 || lowerDiagonal[row+col] == 1) {
+            return false;
+        }
+        return true;
+}
     
-//     private List<String> construct(char[][] board) {
-//         List<String> res = new ArrayList<>();
-//         for (int i = 0; i < board.length; i++) {
-//             res.add(new String(board[i]));
-//         }
-//         return res;
-//     }
-// }
+    private List<String> construct(char[][] board) {
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < board.length; i++) {
+            res.add(new String(board[i]));
+        }
+        return res;
+    }
+}
